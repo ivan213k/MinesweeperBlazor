@@ -1,0 +1,25 @@
+﻿<div class="grid-item">
+    <button class="btn-block" @onclick="@OnButtonClicked">@Value</button>
+</div>
+@code {
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public int RowIndex { get; set; }
+
+    [Parameter]
+    public int ColumnIndex { get; set; }
+
+    [Parameter]
+    public Action<Point> OnCellClicked { get; set; }
+    private void OnButtonClicked()
+    {
+         OnCellClicked(new Point(RowIndex, ColumnIndex));
+    }
+    public void SetNewValue(string value)
+    {
+        Value = value;
+        StateHasChanged();
+    }
+}

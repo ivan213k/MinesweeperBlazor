@@ -1,0 +1,37 @@
+﻿<div style="grid-template-columns: repeat(@ColumnsCount, auto)" class="grid-container">
+    @for (int i = 0; i < RowsCount; i++)
+    {
+        for (int j = 0; j < ColumnsCount; j++)
+        {
+            int i2 = i;
+            int j2 = j;
+            <Cell @ref="@cells[i2,j2]" Value="--" RowIndex="i" ColumnIndex="j" OnCellClicked="@OnCellClicked">
+
+            </Cell>
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int RowsCount { get; set; }
+
+    [Parameter]
+    public int ColumnsCount { get; set; }
+
+    private Cell[,] cells;
+
+    protected override void OnParametersSet()
+    {
+        cells = new Cell[RowsCount, ColumnsCount];
+    }
+   
+    private void OnCellClicked(Point point)
+    {
+        cells[point.X, point.Y].SetNewValue("s"); 
+    }
+
+}
+
+
+

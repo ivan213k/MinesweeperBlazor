@@ -1,5 +1,8 @@
-﻿<div class="grid-item">
-    <button class="btn-block" @onclick="@OnButtonClicked">@Value</button>
+﻿@inject IJSRuntime JSRuntime;
+<div class="grid-item">
+    <button oncontextmenu="return false;" class="btn-block" @onclick="@OnButtonClicked" @onmouseup="HandleMouseUp">
+        <img src="/images/@(Value).png" class="img-fluid"/>
+    </button>
 </div>
 @code {
     [Parameter]
@@ -13,9 +16,19 @@
 
     [Parameter]
     public Action<Point> OnCellClicked { get; set; }
+
+    [Parameter]
+    public Action<Point> OnCellClickedByRightButton { get; set; }
+
     private void OnButtonClicked()
     {
-         OnCellClicked(new Point(RowIndex, ColumnIndex));
+        OnCellClicked(new Point(RowIndex, ColumnIndex));
+    }
+    void HandleMouseUp(MouseEventArgs args)
+    {
+        if (args.Button == 2)
+            OnCellClickedByRightButton(new Point(RowIndex, ColumnIndex));
+
     }
     public void SetNewValue(string value)
     {

@@ -1,0 +1,54 @@
+﻿@inject IBlazorTimer BlazorTimer;
+<div class="grid-container" style="grid-template-columns: auto,auto; border:dotted; border-width:medium">
+    <div style="float:right;" class="grid-item">
+        <img style="width:50px" src="/images/icon.png" />
+        <label>@BombsCount</label>
+    </div>
+    <div style="float:left;" class="grid-item">
+        <img style="width:50px" src="/images/Timer.png" />
+        <label>@TimerTicks</label>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int BombsCount { get; set; }
+
+    public int TimerTicks { get; set; }
+
+    protected override void OnInitialized()
+    {
+        BlazorTimer.OnTimerTicked += OnTimerTick;
+        BlazorTimer.SetInterval(1000);
+        StartTimer();
+    }
+
+    public void StartTimer()
+    {
+        ResetTicks();
+        BlazorTimer.Start();
+    }
+    public void StopTimer()
+    {
+        BlazorTimer.Stop();
+    }
+    public void IncrementBombsCount()
+    {
+        BombsCount++;
+        StateHasChanged();
+    }
+    public void DecrementBombsCount()
+    {
+        BombsCount--;
+        StateHasChanged();
+    }
+    private void OnTimerTick()
+    {
+        TimerTicks++;
+        StateHasChanged();
+    }
+    private void ResetTicks()
+    {
+        TimerTicks = 0;
+    }
+}

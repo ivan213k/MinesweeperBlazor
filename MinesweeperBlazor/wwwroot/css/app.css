@@ -131,6 +131,13 @@ app {
     font-size: 30px;
     text-align: center;
 }
+.cell-image {
+    object-fit: fill;
+}
+.game-bar-image {
+   width:10px;
+   height:10px;
+}
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

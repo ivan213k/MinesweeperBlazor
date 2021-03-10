@@ -42,6 +42,11 @@
         BombsCount--;
         StateHasChanged();
     }
+    public void SetBombsCount(int bombsCount)
+    {
+        BombsCount = bombsCount;
+        StateHasChanged();
+    }
     private void OnTimerTick()
     {
         TimerTicks++;

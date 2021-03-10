@@ -1,6 +1,5 @@
 ﻿@inject IGame GameCore; 
-@inject IJSRuntime JsRuntime;
-<GameBar BombsCount="9" @ref="@gameBar"/>
+<GameBar BombsCount="@BombsCount" @ref="@gameBar"/>
 <div style="grid-template-columns: repeat(@ColumnsCount, auto)" class="grid-container">
     @for (int i = 0; i < RowsCount; i++)
     {
@@ -14,6 +13,5 @@
         }
     }
 </div>
-
-
+<ModalDialog Title="Game Over" PrimaryButtonText="New game" OnPrimaryButtonClicked="@StartNewGame" @ref="@modalDialog"/>
 

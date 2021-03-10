@@ -1,20 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using Minesweeper_WPF.Core.Core;
 
 namespace MinesweeperBlazor.Components
 {
     public partial class GameField
-    {
+    {      
         [Parameter]
         public int RowsCount { get; set; }
 
         [Parameter]
         public int ColumnsCount { get; set; }
 
-        private Cell[,] cells;
+        [Parameter]
+        public int BombsCount { get; set; }
 
+        private Cell[,] cells;
         private GameBar gameBar;
+        private ModalDialog modalDialog;
 
         private CellToImageConverter CellToImageConverter = new CellToImageConverter();
         protected override void OnParametersSet()
@@ -63,15 +65,33 @@ namespace MinesweeperBlazor.Components
 
         private void GameCore_OnGameWin()
         {
-            JsRuntime.InvokeVoidAsync("alert", "Game win!");
             gameBar.StopTimer();
+            modalDialog.Show("You won!");
         }
 
         private void GameCore_OnGameOver(Minesweeper_WPF.Core.Cell bombedCell)
         {
-            JsRuntime.InvokeVoidAsync("alert", "Game over!");
             cells[bombedCell.RowIndex, bombedCell.ColumnIndex].SetNewValue(CellToImageConverter.ConvertToImage(bombedCell));
             gameBar.StopTimer();
+            modalDialog.Show("You lost this game!");
+        }
+
+        private void StartNewGame()
+        {
+            CloseAllCells();
+            gameBar.SetBombsCount(BombsCount);
+            gameBar.StartTimer();
+        }
+
+        private void CloseAllCells()
+        {
+            for (int i = 0; i < RowsCount; i++)
+            {
+                for (int j = 0; j < ColumnsCount; j++)
+                {
+                    cells[i, j].SetNewValue("closed");
+                }
+            }
         }
 
         private bool CellIsFlaged(Cell cell)

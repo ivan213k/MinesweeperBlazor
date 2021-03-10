@@ -81,6 +81,7 @@ namespace MinesweeperBlazor.Components
             CloseAllCells();
             gameBar.SetBombsCount(BombsCount);
             gameBar.StartTimer();
+            GameCore.StartNewGame();
         }
 
         private void CloseAllCells()

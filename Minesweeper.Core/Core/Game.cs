@@ -10,10 +10,12 @@ namespace Minesweeper_WPF.Core.Core
         public event GameWin OnGameWin;
 
         private IGameField gameField;
+        private IGameConfiguration gameConfiguration;
         private int bombsCount;
         private List<Cell> cellsMarkedAsBomb = new List<Cell>();
         public Game(IGameConfiguration gameConfiguration)
         {
+            this.gameConfiguration = gameConfiguration;
             gameField = new GameField(gameConfiguration.Rows,gameConfiguration.Columns,gameConfiguration.BombsCount);
             bombsCount = gameConfiguration.BombsCount;
         }
@@ -59,6 +61,12 @@ namespace Minesweeper_WPF.Core.Core
             {
                 OnGameWin?.Invoke();
             }
+        }
+
+        public void StartNewGame()
+        {
+            cellsMarkedAsBomb.Clear();
+            gameField = new GameField(gameConfiguration.Rows, gameConfiguration.Columns, gameConfiguration.BombsCount);
         }
     }
 }

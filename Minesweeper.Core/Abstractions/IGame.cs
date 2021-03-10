@@ -9,6 +9,7 @@ namespace Minesweeper_WPF.Core.Abstractions
         event GameOver OnGameOver;
 
         event GameWin OnGameWin;
+        void StartNewGame();
         List<Cell> OpenCell(IPoint point);
         void MarkCellAsBomb(IPoint point);
         void RemoveBombMark(IPoint point);

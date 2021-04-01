@@ -28,14 +28,16 @@ namespace MinesweeperBlazor.Components
         {
             if (CellIsFlaged(cells[point.X, point.Y]))
             {
-                GameCore.RemoveBombMark(point);
-                gameBar.IncrementBombsCount();
+                RemoveFlagedMark(point);
             }
-            var cellsToOpen = GameCore.OpenCell(point);
-            foreach (var cell in cellsToOpen)
+            if (CellIsClosed(cells[point.X, point.Y]))
             {
-                cells[cell.RowIndex, cell.ColumnIndex].SetNewValue(CellToImageConverter.ConvertToImage(cell));
-            }
+                var cellsToOpen = GameCore.OpenCell(point);
+                foreach (var cell in cellsToOpen)
+                {
+                    cells[cell.RowIndex, cell.ColumnIndex].SetNewValue(CellToImageConverter.ConvertToImage(cell));
+                }
+            }   
         }
 
         private void MarkCellAsBomb(Point point)
@@ -44,7 +46,7 @@ namespace MinesweeperBlazor.Components
             {
                 RemoveFlagedMark(point);
             }
-            else
+            if(CellIsClosed(cells[point.X, point.Y]))
             {
                 GameCore.MarkCellAsBomb(point);
                 cells[point.X, point.Y].SetNewValue(CellToImageConverter.GetFlaggedImage());
@@ -98,6 +100,11 @@ namespace MinesweeperBlazor.Components
         private bool CellIsFlaged(Cell cell)
         {
             return cell.Value == "flaged";
+        }
+
+        private bool CellIsClosed(Cell cell)
+        {
+            return cell.Value == "closed";
         }
     }
 }

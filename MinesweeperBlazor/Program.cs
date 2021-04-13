@@ -20,6 +20,7 @@ namespace MinesweeperBlazor
             builder.Services.AddTransient<IGameConfiguration>(sp => new GameConfiguration(9, 9, 9));
             builder.Services.AddTransient<IGame, Game>();
             builder.Services.AddTransient<IBlazorTimer, BlazorTimer>();
+            builder.Services.AddTransient<IGameLevelsService, GameLevelService>();
             await builder.Build().RunAsync();
         }
     }

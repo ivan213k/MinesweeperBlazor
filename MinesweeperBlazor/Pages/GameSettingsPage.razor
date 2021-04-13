@@ -1,0 +1,61 @@
+﻿@page "/gameSettings";
+<h3 class="text-center">Game settings page</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h4>Select game level: </h4>
+            @if (gameLevels != null)
+            {
+                @foreach (var level in gameLevels)
+                {
+                    <div class="form-check">
+                        <input  class="form-check-input" type="radio" name="flexRadioDefault" id="@level.Name">
+                        <div for="@level.Name">
+                            <label class="form-check-label" for="@level.Name">@level.Name</label>
+                            <br />
+                            <label>Rows: @level.GameConfiguration.Rows</label>
+                            <br />
+                            <label>Columns: @level.GameConfiguration.Columns</label>
+                            <br />
+                            <label>Bombs count: @level.GameConfiguration.BombsCount</label>
+                        </div>
+                    </div>
+                }
+             }
+        </div>
+        <div class="col-sm-8">
+            <br />
+            <div class="form-check">
+                <input type="radio" @bind-value="@isSpecialFieldSelected" class="form-check-input" name="flexRadioDefault" id="flexRadioSpecial">
+                
+                <label class="form-check-label" for="flexRadioSpecial">
+                    Special field
+                </label>
+            </div>
+           
+            <div class="text-left">
+                <EditForm @ref="@editForm" Model="customGameSettings">
+                    <FluentValidationValidator></FluentValidationValidator>
+                    <div class="form-group">
+                        <label for="inputRows">Rows: (from 2 to 30)</label>
+                        <InputNumber @bind-Value="customGameSettings.Rows" class="form-control" id="inputRows" placeholder="Enter rows count" />
+                        <ValidationMessage For="@(() => customGameSettings.Rows)" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputColumns">Columns: (from 2 to 60)</label>
+                        <InputNumber @bind-Value="customGameSettings.Columns" class="form-control" id="inputColumns" placeholder="Enter columns count" />
+                        <ValidationMessage For="@(() => customGameSettings.Columns)" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBombs">Bombs: </label>
+                        <InputNumber @bind-Value="customGameSettings.BombsCount" class="form-control" id="inputBombs" placeholder="Enter bombs count" />
+                        <ValidationMessage For="@(() => customGameSettings.BombsCount)" />
+                    </div>
+                </EditForm>
+            </div>
+            
+        </div>
+    </div>
+</div>  
+<Footer PrimaryButtonText="Apply" OnPrimaryButtonClicked="OnApplyClicked"></Footer>
+

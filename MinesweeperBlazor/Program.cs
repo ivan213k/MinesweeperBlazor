@@ -17,7 +17,7 @@ namespace MinesweeperBlazor
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddTransient<IGameConfiguration>(sp => new GameConfiguration(9, 9, 9));
+            builder.Services.AddTransient<IGameConfiguration>(sp => GameSesstings.GameConfiguration);
             builder.Services.AddTransient<IGame, Game>();
             builder.Services.AddTransient<IBlazorTimer, BlazorTimer>();
             builder.Services.AddTransient<IGameLevelsService, GameLevelService>();

@@ -1,8 +1,5 @@
 ﻿@page "/game"
 
-<GameField RowsCount="9" ColumnsCount="9" BombsCount="9">
+<GameField RowsCount="@gameConfiguration.Rows" ColumnsCount="@gameConfiguration.Columns" BombsCount="@gameConfiguration.BombsCount">
 
 </GameField>
-@code {
-
-}

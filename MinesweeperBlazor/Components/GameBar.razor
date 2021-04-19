@@ -1,12 +1,14 @@
 ﻿@inject IBlazorTimer BlazorTimer;
-<div class="grid-container" style="grid-template-columns: auto,auto; border:dotted; border-width:medium">
-    <div style="float:right;" class="grid-item">
-        <img style="width:50px" src="/images/icon.png" />
-        <label>@BombsCount</label>
-    </div>
-    <div style="float:left;" class="grid-item">
-        <img style="width:50px" src="/images/Timer.png" />
-        <label>@TimerTicks</label>
+<div oncontextmenu="return false;" class="container">
+    <div class="row game-bar-container">
+        <div class="col-sm grid-item">
+            <img style="width:50px" src="/images/icon.png" />
+            <label style="vertical-align:central">@BombsCount</label>
+        </div>
+        <div class="col-sm grid-item">
+            <img style="width:50px" src="/images/Timer.png" />
+            <label style="vertical-align:central">@TimerTicks</label>
+        </div>
     </div>
 </div>
 

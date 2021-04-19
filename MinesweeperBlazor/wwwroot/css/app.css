@@ -19,6 +19,12 @@ app {
     display: flex;
     flex-direction: column;
 }
+.best-games-container {
+    min-height: 300px;
+    border:solid;
+    border-width:medium;
+    border-color: aqua;
+}
 
 .top-row {
     height: 3.5rem;

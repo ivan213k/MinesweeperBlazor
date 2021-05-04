@@ -1,15 +1,23 @@
 ﻿@page "/gameSettings";
 <h3 class="text-center">Game settings page</h3>
+@if (gameLevels is null)
+{
+<p><em>Loading...</em></p>
+}
+else
+{
 <div class="container">
     <EditForm EditContext="@editContext" @ref="@editForm">
         <FluentValidationValidator></FluentValidationValidator>
         <div class="row">
             <div class="col-sm-4">
                 <h4>Select game level: </h4>
-                @if (gameLevels != null)
-                {
                     @foreach (var level in gameLevels)
                     {
+                        if (level.Name == "Custom Field")
+                        {
+                            continue;
+                        }
                         <div class="form-check">
                             <input @onchange="@((r)=>OnSelectedLevelChanged(r, level))" value="@level" class="form-check-input" type="radio" name="flexRadioDefault" id="@level.Name" checked="@(level.Name == gameLevels.First().Name)" />
                             <div for="@level.Name">
@@ -24,7 +32,6 @@
                         </div>
                     }
 
-                }
             </div>
             <div class="col-sm-8">
                 <br />
@@ -56,5 +63,6 @@
         </div>
     </EditForm>
 </div>
+}
 <Footer PrimaryButtonText="Apply" OnSecondaryButtonClicked="OnCancelClicked" OnPrimaryButtonClicked="OnApplyClicked"></Footer>
 

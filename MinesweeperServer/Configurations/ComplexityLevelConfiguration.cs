@@ -10,7 +10,7 @@ namespace MinesweeperServer.Configurations
         {
             builder.HasKey(l => l.Id);
             builder.Property(l => l.Complexity).IsRequired();
-            builder.HasData(new ComplexityLevel(-1,"Beginner"), new ComplexityLevel(-2,"Intermediate"), new ComplexityLevel(-3,"Advanced"));
+            builder.HasData(new ComplexityLevel(-1,"Beginner"), new ComplexityLevel(-2,"Intermediate"), new ComplexityLevel(-3,"Advanced"), new ComplexityLevel(1, "Custom Field"));
         }
     }
 }

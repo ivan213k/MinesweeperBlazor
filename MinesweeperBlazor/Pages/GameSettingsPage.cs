@@ -32,6 +32,7 @@ namespace MinesweeperBlazor.Pages
         {
             editContext = new EditContext(customGameSettings);
             gameLevels = GameLevelsService.GetGameLevels();
+
             selectedLevel = gameLevels.FirstOrDefault();
         }
         private void OnSelectedLevelChanged(ChangeEventArgs eventArgs, GameLevel level) 
@@ -49,11 +50,13 @@ namespace MinesweeperBlazor.Pages
             {
                 if (editContext.Validate())
                 {
+                    GameSesstings.CurrentLevel = "Custom Field";
                     GameSesstings.GameConfiguration = customGameSettings;
                 }
             }
             else
             {
+                GameSesstings.CurrentLevel = selectedLevel.Name;
                 GameSesstings.GameConfiguration = selectedLevel.GameConfiguration;
             }
             NavigateToGame();

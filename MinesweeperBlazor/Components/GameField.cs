@@ -1,10 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Minesweeper.Shared.Models;
 using Minesweeper_WPF.Core.Core;
+using System;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace MinesweeperBlazor.Components
 {
     public partial class GameField
-    {      
+    {     
+        [Inject]
+        public HttpClient HttpClient { get; set; }
+
         [Parameter]
         public int RowsCount { get; set; }
 
@@ -65,17 +73,30 @@ namespace MinesweeperBlazor.Components
             GameCore.OnGameWin += GameCore_OnGameWin;
         }
 
-        private void GameCore_OnGameWin()
+        private async void GameCore_OnGameWin()
         {
             gameBar.StopTimer();
             modalDialog.Show("You won!");
+            await StoreGameRecord(isGameWin: true);
         }
 
-        private void GameCore_OnGameOver(Minesweeper_WPF.Core.Cell bombedCell)
+        private async void GameCore_OnGameOver(Minesweeper_WPF.Core.Cell bombedCell)
         {
             cells[bombedCell.RowIndex, bombedCell.ColumnIndex].SetNewValue(CellToImageConverter.ConvertToImage(bombedCell));
             gameBar.StopTimer();
             modalDialog.Show("You lost this game!");
+            await StoreGameRecord(isGameWin: false);
+        }
+        private async Task StoreGameRecord(bool isGameWin)
+        {
+            GameRecordModel gameRecordModel = new GameRecordModel
+            {
+                IsWin = isGameWin,
+                Date = DateTime.Now,
+                Duration = TimeSpan.FromSeconds(gameBar.TimerTicks),
+                DurationInSeconds = gameBar.TimerTicks
+            };
+            await HttpClient.PostAsJsonAsync($"api/statistic/{GameSesstings.CurrentLevel}", gameRecordModel);
         }
 
         private void StartNewGame()

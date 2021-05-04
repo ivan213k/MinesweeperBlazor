@@ -1,24 +1,19 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MinesweeperServer.Data;
 using MinesweeperServer.Models;
+using MinesweeperServer.Repositories;
 using MinesweeperServer.Services;
 using MinesweeperServer.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MinesweeperServer
 {
@@ -34,11 +29,6 @@ namespace MinesweeperServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
-            });
-
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -65,7 +55,15 @@ namespace MinesweeperServer
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["securityKey"]))
                 };
             });
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            });
             services.AddControllers();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddTransient<IRepository<GameRecord>, Repository<GameRecord>>();
+            services.AddTransient<IRepository<ComplexityLevel>, Repository<ComplexityLevel>>();
+            services.AddTransient<IStatisticService, StatisticService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,10 +78,11 @@ namespace MinesweeperServer
 
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors("Open");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

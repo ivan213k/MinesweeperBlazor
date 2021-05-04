@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MinesweeperServer.Models
+namespace Minesweeper.Shared.Models
 {
     public class StatisticModel
     {
-        public List<GameRecord> BestGames { get; set; }
+        private double percentOfVictories;
+        public List<GameRecordModel> BestGames { get; set; }
         public int TotalGamesCount { get; set; }
         public int WonGamesCount { get; set; }
-        public double PercentOfVictories 
-        { 
-            get 
+        public double PercentOfVictories
+        {
+            set => percentOfVictories = value;
+            get
             {
                 if (TotalGamesCount == 0)
                 {
                     return 0;
                 }
                 return Math.Round((double)WonGamesCount / (double)TotalGamesCount * 100);
-            } 
+            }
         }
     }
 }

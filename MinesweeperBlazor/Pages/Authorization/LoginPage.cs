@@ -14,7 +14,10 @@ namespace MinesweeperBlazor.Pages.Authorization
         
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-        
+
+        [Parameter]
+        public string ReturnUrl { get; set; } 
+
         public bool ShowAuthError { get; set; }
        
         public string Error { get; set; }
@@ -29,7 +32,7 @@ namespace MinesweeperBlazor.Pages.Authorization
             }
             else
             {
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo($"/{ReturnUrl}");
             }
         }
     }

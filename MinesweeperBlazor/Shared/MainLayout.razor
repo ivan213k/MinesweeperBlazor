@@ -6,8 +6,27 @@
 
 <div class="main">
     @*<div class="top-row px-4">
+        <ul class="navbar-nav">
+            <AuthorizeView>
+                <Authorized>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark">Hello @context.User.Identity.Name!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/logout">Logout</a>
+                    </li>
+                </Authorized>
+                <NotAuthorized>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/registration">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/login">Login</a>
+                    </li>
+                </NotAuthorized>
+            </AuthorizeView>
+        </ul>
     </div>*@
-
     <div class="content px-4">
         @Body
     </div>

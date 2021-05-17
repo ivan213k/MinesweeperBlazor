@@ -44,12 +44,12 @@ else
                 </div>
                 <div class="text-left">
                     <div class="form-group">
-                        <label for="inputRows">Rows: (from 2 to 30)</label>
+                        <label for="inputRows">Rows: (from 2 to 60)</label>
                         <InputNumber @bind-Value="customGameSettings.Rows" class="form-control" id="inputRows" placeholder="Enter rows count" />
                         <ValidationMessage For="@(() => customGameSettings.Rows)" />
                     </div>
                     <div class="form-group">
-                        <label for="inputColumns">Columns: (from 2 to 60)</label>
+                        <label for="inputColumns">Columns: (from 2 to 16)</label>
                         <InputNumber @bind-Value="customGameSettings.Columns" class="form-control" id="inputColumns" placeholder="Enter columns count" />
                         <ValidationMessage For="@(() => customGameSettings.Columns)" />
                     </div>

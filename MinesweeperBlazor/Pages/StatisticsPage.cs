@@ -47,6 +47,7 @@ namespace MinesweeperBlazor.Pages
         {
             selectedLevel = eventArgs.Value.ToString();
             currentLevelStatistic = await HttpClient.GetFromJsonAsync<StatisticModel>($"api/statistic/{selectedLevel}");
+            currentLevelStatistic.BestGames = currentLevelStatistic.BestGames.OrderBy(r => r.DurationInSeconds).ToList();
             StateHasChanged();
         }
         private void NavigateToGame() 

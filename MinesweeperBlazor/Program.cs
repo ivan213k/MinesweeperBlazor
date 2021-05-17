@@ -20,7 +20,7 @@ namespace MinesweeperBlazor
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddScoped(sp => new HttpClient {BaseAddress = new Uri("https://localhost:5003/") });
+            builder.Services.AddScoped(sp => new HttpClient {BaseAddress = new Uri("https://ivan213kminesweeper.herokuapp.com/") });
             builder.Services.AddTransient<IGameConfiguration>(sp => GameSesstings.GameConfiguration);
             builder.Services.AddTransient<IGame, Game>();
             builder.Services.AddTransient<IBlazorTimer, BlazorTimer>();

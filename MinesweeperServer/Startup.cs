@@ -29,8 +29,14 @@ namespace MinesweeperServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = "";
+                #if DEBUG
+                    connectionString = Configuration.GetConnectionString("DefaultConnection");
+                #else
+                    connectionString = Configuration.GetConnectionString("RemoteConnection");
+                #endif
             services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+               options.UseSqlServer(connectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

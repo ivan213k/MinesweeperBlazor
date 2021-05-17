@@ -17,10 +17,7 @@ jobs:
         dotnet-version: 3.1
          # publishes Blazor project to the release-folder
     - name: Publish .NET Core Project
-      run: |
-       cp wwwroot/index.html wwwroot/404.html
-       dotnet publish ../MinesweeperBlazor/MinesweeperBlazor/MinesweeperBlazor.csproj -c Release -o release --nologo
-    # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
+      run: dotnet publish ../MinesweeperBlazor/MinesweeperBlazor/MinesweeperBlazor.csproj -c Release -o release --nologo
     - name: Change base-tag in index.html from / to MinesweeperBlazor
       run: sed -i 's/<base href="\/" \/>/<base href="\/MinesweeperBlazor\/" \/>/g' release/wwwroot/index.html
     - name: Add .nojekyll file
@@ -31,4 +28,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: release/wwwroot
-          # changes the base-tag in index.html from '/' to 'MinesweeperBlazor' to match GitHub Pages repository subdirectory
+    - name: Copy Index file
+      run: cp wwwroot/index.html wwwroot/404.html

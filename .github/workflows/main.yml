@@ -28,5 +28,3 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: release/wwwroot
-    - name: Copy Index file
-      run: cp wwwroot/index.html wwwroot/404.html

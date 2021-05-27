@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/docker-compose.yml
+/docker-compose.dcproj
+/docker-compose.override.yml

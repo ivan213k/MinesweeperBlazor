@@ -52,14 +52,15 @@ namespace MinesweeperBlazor.Pages
                 {
                     GameSesstings.CurrentLevel = "Custom Field";
                     GameSesstings.GameConfiguration = customGameSettings;
+                    NavigateToGame();
                 }
             }
             else
             {
                 GameSesstings.CurrentLevel = selectedLevel.Name;
                 GameSesstings.GameConfiguration = selectedLevel.GameConfiguration;
+                NavigateToGame();
             }
-            NavigateToGame();
         }
         private void OnCancelClicked() 
         {
